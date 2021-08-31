@@ -201,7 +201,19 @@ GUIName.Text = "Funky Friday GUI (by Grizzle and Kad3n)"
 GUIName.TextColor3 = Color3.fromRGB(0, 0, 0)
 GUIName.TextSize = 20.000
 
--- Scripts:
+game:GetService("UserInputService").InputBegan:connect(onKeyPress)
+
+ChangeTagButton.MouseButton1Click:Connect(function()
+	local ohTable1 = { [1] = "Server", [2] = "Tags", [3] = "EquipTag" }
+	local ohTable2 = { [1] = TagName.text }
+	game:GetService("ReplicatedStorage").RF:InvokeServer(ohTable1, ohTable2)
+end)
+
+ChangeTagColor.MouseButton1Click:Connect(function()
+	local colorTable1 = { [1] = "Server", [2] = "UpdateTagColor" }
+	local colorTable2 = { [1] = { ["R"] = RBox.text, ["G"] = GBox.text, ["B"] = BBox.text } }
+	game:GetService("ReplicatedStorage").RF:InvokeServer(colorTable1, colorTable2)
+end)
 
 local function RFXP_fake_script() -- MainFrame.ColourWheelHandler 
 	local script = Instance.new('LocalScript', MainFrame)
