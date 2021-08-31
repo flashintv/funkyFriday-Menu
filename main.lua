@@ -14,6 +14,8 @@ local RBox = Instance.new("TextBox")
 local TagName = Instance.new("TextBox")
 local ColourDisplay = Instance.new("ImageLabel")
 local GUIName = Instance.new("TextLabel")
+local ToggleRainbow = Instance.new("TextButton")
+local RainbowLabel = Instance.new("TextLabel")
 
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
@@ -201,21 +203,31 @@ GUIName.Text = "Funky Friday GUI (by Grizzle and Kad3n)"
 GUIName.TextColor3 = Color3.fromRGB(0, 0, 0)
 GUIName.TextSize = 20.000
 
-game:GetService("UserInputService").InputBegan:connect(onKeyPress)
+ToggleRainbow.Name = "ToggleRainbow"
+ToggleRainbow.Parent = MainFrame
+ToggleRainbow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleRainbow.Position = UDim2.new(0.0733333826, 0, 12.6285715, 0)
+ToggleRainbow.Size = UDim2.new(0, 43, 0, 43)
+ToggleRainbow.ZIndex = 3
+ToggleRainbow.Font = Enum.Font.SourceSans
+ToggleRainbow.Text = "OFF"
+ToggleRainbow.TextColor3 = Color3.fromRGB(0, 0, 0)
+ToggleRainbow.TextSize = 30.000
 
-ChangeTagButton.MouseButton1Click:Connect(function()
-	local ohTable1 = { [1] = "Server", [2] = "Tags", [3] = "EquipTag" }
-	local ohTable2 = { [1] = TagName.text }
-	game:GetService("ReplicatedStorage").RF:InvokeServer(ohTable1, ohTable2)
-end)
+RainbowLabel.Name = "RainbowLabel"
+RainbowLabel.Parent = MainFrame
+RainbowLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+RainbowLabel.BackgroundTransparency = 1.000
+RainbowLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+RainbowLabel.BorderSizePixel = 0
+RainbowLabel.Position = UDim2.new(0.0704651028, 0, 12.5069771, 0)
+RainbowLabel.Size = UDim2.new(0, 226, 0, 50)
+RainbowLabel.Font = Enum.Font.SourceSans
+RainbowLabel.Text = "Rainbow Tag"
+RainbowLabel.TextColor3 = Color3.fromRGB(249, 249, 249)
+RainbowLabel.TextSize = 24.000
 
-ChangeTagColor.MouseButton1Click:Connect(function()
-	local colorTable1 = { [1] = "Server", [2] = "UpdateTagColor" }
-	local colorTable2 = { [1] = { ["R"] = RBox.text, ["G"] = GBox.text, ["B"] = BBox.text } }
-	game:GetService("ReplicatedStorage").RF:InvokeServer(colorTable1, colorTable2)
-end)
-
-local function RFXP_fake_script() -- MainFrame.ColourWheelHandler 
+local function ALVNBTV_fake_script() -- MainFrame.ColourWheelHandler 
 	local script = Instance.new('LocalScript', MainFrame)
 
 	local colourWheel = script.Parent:WaitForChild("ColourWheel")
@@ -238,7 +250,6 @@ local function RFXP_fake_script() -- MainFrame.ColourWheelHandler
 	
 	
 	local function updateColour(centreOfWheel)
-		
 		
 		local colourPickerCentre = Vector2.new(
 			colourWheel.Picker.AbsolutePosition.X + (colourWheel.Picker.AbsoluteSize.X/2),
@@ -314,8 +325,50 @@ local function RFXP_fake_script() -- MainFrame.ColourWheelHandler
 		updateColour(centreOfWheel)
 	end)
 end
-coroutine.wrap(RFXP_fake_script)()
-local function WXMWB_fake_script() -- MainFrame.DragScript 
+coroutine.wrap(ALVNBTV_fake_script)()
+local function IEVTD_fake_script() -- MainFrame.ExecuteButton 
+	local script = Instance.new('LocalScript', MainFrame)
+
+	local ChangeTagColor = script.Parent.ChangeTagColor
+	local ChangeTagButton = script.Parent.ChangeTagButton
+	local RBox = script.Parent.RBox
+	local GBox = script.Parent.GBox
+	local BBox = script.Parent.BBox
+	local TagName = script.Parent.TagName
+	
+	ChangeTagButton.MouseButton1Click:Connect(function()
+		local ohTable1 = { [1] = "Server", [2] = "Tags", [3] = "EquipTag" }
+		local ohTable2 = { [1] = TagName.text }
+		game:GetService("ReplicatedStorage").RF:InvokeServer(ohTable1, ohTable2)
+	end)
+	
+	ChangeTagColor.MouseButton1Click:Connect(function()
+		local colorTable1 = { [1] = "Server", [2] = "UpdateTagColor" }
+		local colorTable2 = { [1] = { ["R"] = RBox.text, ["G"] = GBox.text, ["B"] = BBox.text } }
+		game:GetService("ReplicatedStorage").RF:InvokeServer(colorTable1, colorTable2)
+	end)
+end
+coroutine.wrap(IEVTD_fake_script)()
+local function JQJD_fake_script() -- MainFrame.ToggleGUI 
+	local script = Instance.new('LocalScript', MainFrame)
+
+	local gui = script.Parent
+	
+	local hotkey = "p"
+	local mouse = game.Players.LocalPlayer:GetMouse()
+	
+	mouse.KeyDown:Connect(function(key)
+		if key == hotkey then
+			if gui.Visible then
+				gui.Visible = not gui.Visible
+			else
+				gui.Visible = true
+			end
+		end
+	end)
+end
+coroutine.wrap(JQJD_fake_script)()
+local function QIXAKSY_fake_script() -- MainFrame.DragScript 
 	local script = Instance.new('LocalScript', MainFrame)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -358,23 +411,50 @@ local function WXMWB_fake_script() -- MainFrame.DragScript
 		end
 	end)
 end
-coroutine.wrap(WXMWB_fake_script)()
-local function DDMR_fake_script() -- MainFrame.ToggleGUI 
+coroutine.wrap(QIXAKSY_fake_script)()
+local function GTST_fake_script() -- MainFrame.ColorRainbow 
 	local script = Instance.new('LocalScript', MainFrame)
 
-	local gui = script.Parent
+	-- Imports
+	local button = script.Parent.ToggleRainbow
 	
-	local hotkey = "p"
-	local mouse = game.Players.LocalPlayer:GetMouse()
+	-- Color loop
+	local toggle = false
+	local t = 10
+	local tick = tick
+	local fromHSV = Color3.fromHSV
+	local RunService = game:GetService("RunService")
 	
-	mouse.KeyDown:Connect(function(key)
-		if key == hotkey then
-			if gui.Visible then
-				gui.Visible = not gui.Visible
-			else
-				gui.Visible = true
-			end
+	-- Functions
+	button.MouseButton1Down:Connect(function()
+		if toggle == false then
+			toggle = true
+			button.Text = "ON"
+			startRainbow()
+		else
+			toggle = false
+			button.Text = "OFF"
+			stopRainbow()
 		end
 	end)
+	
+	function startRainbow()
+		RunService:BindToRenderStep("Rainbow", 1000, function()
+			local hue = tick() % t / t
+			local color = fromHSV(hue, 1, 1)
+			
+			local RBrick = math.floor(color.R * 255)
+			local GBrick = math.floor(color.G * 255)
+			local BBrick = math.floor(color.B * 255)
+			
+			local colorTable1 = { [1] = "Server", [2] = "UpdateTagColor" }
+			local colorTable2 = { [1] = { ["R"] = RBrick, ["G"] = GBrick, ["B"] = BBrick } }
+			game:GetService("ReplicatedStorage").RF:InvokeServer(colorTable1, colorTable2)
+		end)
+	end
+	
+	function stopRainbow()
+		RunService:UnbindFromRenderStep("Rainbow")
+	end
 end
-coroutine.wrap(DDMR_fake_script)()
+coroutine.wrap(GTST_fake_script)()
