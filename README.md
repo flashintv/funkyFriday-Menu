@@ -5,3 +5,8 @@ you can do funny things with it such as bypassing the tag limit, swearing on rob
 also you (Charogus) if youre reading this fuck off you racist
 
 you can use literally almost any lua executor to use this - even jjsploit works which is a fucking joke
+
+# COMMAND
+```lua
+loadstring(game:HttpGet(('https://raw.githubusercontent.com/flashintv/funkyFriday-Menu/main/main.lua'),true))()
+```
