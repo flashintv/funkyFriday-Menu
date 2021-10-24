@@ -16,6 +16,8 @@ local ColourDisplay = Instance.new("ImageLabel")
 local GUIName = Instance.new("TextLabel")
 local ToggleRainbow = Instance.new("TextButton")
 local RainbowLabel = Instance.new("TextLabel")
+local SoloMatchToggle = Instance.new("TextButton")
+local SoloMatchLabel = Instance.new("TextLabel")
 
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
@@ -33,7 +35,7 @@ BackFrame.BackgroundColor3 = Color3.fromRGB(53, 53, 53)
 BackFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 BackFrame.BorderSizePixel = 5
 BackFrame.LayoutOrder = 1
-BackFrame.Size = UDim2.new(0, 300, 0, 500)
+BackFrame.Size = UDim2.new(0, 300, 0, 570)
 
 ColourWheel.Name = "ColourWheel"
 ColourWheel.Parent = MainFrame
@@ -199,7 +201,7 @@ GUIName.LayoutOrder = 1
 GUIName.Size = UDim2.new(0, 300, 0, 35)
 GUIName.ZIndex = 2
 GUIName.Font = Enum.Font.SourceSans
-GUIName.Text = "Funky Friday GUI (by Grizzle and Kad3n)"
+GUIName.Text = "Funky Friday GUI (by Grizzle and CryBit)"
 GUIName.TextColor3 = Color3.fromRGB(0, 0, 0)
 GUIName.TextSize = 20.000
 
@@ -227,106 +229,131 @@ RainbowLabel.Text = "Rainbow Tag"
 RainbowLabel.TextColor3 = Color3.fromRGB(249, 249, 249)
 RainbowLabel.TextSize = 24.000
 
-local function ALVNBTV_fake_script() -- MainFrame.ColourWheelHandler 
+SoloMatchToggle.Name = "SoloMatchToggle"
+SoloMatchToggle.Parent = MainFrame
+SoloMatchToggle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+SoloMatchToggle.Position = UDim2.new(0.0733333826, 0, 14.6285715, 0)
+SoloMatchToggle.Size = UDim2.new(0, 43, 0, 43)
+SoloMatchToggle.ZIndex = 3
+SoloMatchToggle.Font = Enum.Font.SourceSans
+SoloMatchToggle.Text = "OFF"
+SoloMatchToggle.TextColor3 = Color3.fromRGB(0, 0, 0)
+SoloMatchToggle.TextSize = 30.000
+
+SoloMatchLabel.Name = "SoloMatchLabel"
+SoloMatchLabel.Parent = MainFrame
+SoloMatchLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+SoloMatchLabel.BackgroundTransparency = 1.000
+SoloMatchLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+SoloMatchLabel.BorderSizePixel = 0
+SoloMatchLabel.Position = UDim2.new(0.1004651028, 0, 14.5069771, 0)
+SoloMatchLabel.Size = UDim2.new(0, 226, 0, 50)
+SoloMatchLabel.Font = Enum.Font.SourceSans
+SoloMatchLabel.Text = "Auto Solo Match"
+SoloMatchLabel.TextColor3 = Color3.fromRGB(249, 249, 249)
+SoloMatchLabel.TextSize = 24.000
+
+local function colorWheelHandler()
 	local script = Instance.new('LocalScript', MainFrame)
 
 	local colourWheel = script.Parent:WaitForChild("ColourWheel")
 	local wheelPicker = colourWheel:WaitForChild("Picker")
-	
+
 	local darknessPicker = script.Parent:WaitForChild("DarknessPicker")
 	local darknessSlider = darknessPicker:WaitForChild("Slider")
-	
+
 	local colourDisplay = script.Parent:WaitForChild("ColourDisplay")
-	
+
 	local RBox = script.Parent:WaitForChild("RBox")
 	local GBox = script.Parent:WaitForChild("GBox")
 	local BBox = script.Parent:WaitForChild("BBox")
-	
+
 	local uis = game:GetService("UserInputService")
-	
-	
+
+
 	local buttonDown = false
 	local movingSlider = false
-	
-	
+
+
 	local function updateColour(centreOfWheel)
-		
+
 		local colourPickerCentre = Vector2.new(
 			colourWheel.Picker.AbsolutePosition.X + (colourWheel.Picker.AbsoluteSize.X/2),
 			colourWheel.Picker.AbsolutePosition.Y + (colourWheel.Picker.AbsoluteSize.Y/2)
 		)
 		local h = (math.pi - math.atan2(colourPickerCentre.Y - centreOfWheel.Y, colourPickerCentre.X - centreOfWheel.X)) / (math.pi * 2)
-		
+
 		local s = (centreOfWheel - colourPickerCentre).Magnitude / (colourWheel.AbsoluteSize.X/2)
-		
+
 		local v = math.abs((darknessSlider.AbsolutePosition.Y - darknessPicker.AbsolutePosition.Y) / darknessPicker.AbsoluteSize.Y - 1)
-		
-		
+
+
 		local hsv = Color3.fromHSV(math.clamp(h, 0, 1), math.clamp(s, 0, 1), math.clamp(v, 0, 1))
-		
-		RBox.Text = math.floor(hsv.R * 255 + 16)
-		GBox.Text = math.floor(hsv.G * 255 + 16)
-		BBox.Text = math.floor(hsv.B * 255 + 16)
-		
+
+		RBox.Text = math.floor(hsv.R * 255)
+		GBox.Text = math.floor(hsv.G * 255)
+		BBox.Text = math.floor(hsv.B * 255)
+
 		colourDisplay.ImageColor3 = hsv
 		darknessPicker.UIGradient.Color = ColorSequence.new{
 			ColorSequenceKeypoint.new(0, hsv), 
 			ColorSequenceKeypoint.new(1, Color3.new(0, 0, 0))
 		}
 	end
-	
-	
+
+
 	colourWheel.MouseButton1Down:Connect(function()
 		buttonDown = true
 	end)
-	
+
 	darknessPicker.MouseButton1Down:Connect(function()
 		movingSlider = true
 	end)
-	
-	
+
+
 	uis.InputEnded:Connect(function(input)
-		
+
 		if input.UserInputType ~= Enum.UserInputType.MouseButton1 then return end
-		
+
 		buttonDown = false
 		movingSlider = false
 	end)
-	
-	
+
+
 	uis.InputChanged:Connect(function(input)
-		
+
 		if input.UserInputType ~= Enum.UserInputType.MouseMovement then return end
-		
-		
+
+
 		local mousePos = uis:GetMouseLocation() - Vector2.new(0, game:GetService("GuiService"):GetGuiInset().Y)
-		
+
 		local centreOfWheel = Vector2.new(colourWheel.AbsolutePosition.X + (colourWheel.AbsoluteSize.X/2), colourWheel.AbsolutePosition.Y + (colourWheel.AbsoluteSize.Y/2))
-		
+
 		local distanceFromWheel = (mousePos - centreOfWheel).Magnitude
-		
-		
+
+
 		if distanceFromWheel <= colourWheel.AbsoluteSize.X/2 and buttonDown then
-			
+
 			wheelPicker.Position = UDim2.new(0, mousePos.X - colourWheel.AbsolutePosition.X, 0, mousePos.Y - colourWheel.AbsolutePosition.Y)
-	
-			
+
+
 		elseif movingSlider then
-			
+
 			darknessSlider.Position = UDim2.new(darknessSlider.Position.X.Scale, 0, 0, 
 				math.clamp(
-				mousePos.Y - darknessPicker.AbsolutePosition.Y, 
-				0, 
-				darknessPicker.AbsoluteSize.Y)
+					mousePos.Y - darknessPicker.AbsolutePosition.Y, 
+					0, 
+					darknessPicker.AbsoluteSize.Y)
 			)	
 		end
-		
-		
+
+
 		updateColour(centreOfWheel)
 	end)
 end
-coroutine.wrap(ALVNBTV_fake_script)()
-local function IEVTD_fake_script() -- MainFrame.ExecuteButton 
+coroutine.wrap(colorWheelHandler)()
+
+local function executeTagButton()
 	local script = Instance.new('LocalScript', MainFrame)
 
 	local ChangeTagColor = script.Parent.ChangeTagColor
@@ -335,28 +362,29 @@ local function IEVTD_fake_script() -- MainFrame.ExecuteButton
 	local GBox = script.Parent.GBox
 	local BBox = script.Parent.BBox
 	local TagName = script.Parent.TagName
-	
+
 	ChangeTagButton.MouseButton1Click:Connect(function()
 		local ohTable1 = { [1] = "Server", [2] = "Tags", [3] = "EquipTag" }
 		local ohTable2 = { [1] = TagName.text }
 		game:GetService("ReplicatedStorage").RF:InvokeServer(ohTable1, ohTable2)
 	end)
-	
+
 	ChangeTagColor.MouseButton1Click:Connect(function()
 		local colorTable1 = { [1] = "Server", [2] = "UpdateTagColor" }
 		local colorTable2 = { [1] = { ["R"] = RBox.text, ["G"] = GBox.text, ["B"] = BBox.text } }
 		game:GetService("ReplicatedStorage").RF:InvokeServer(colorTable1, colorTable2)
 	end)
 end
-coroutine.wrap(IEVTD_fake_script)()
-local function JQJD_fake_script() -- MainFrame.ToggleGUI 
+coroutine.wrap(executeTagButton)()
+
+local function toggleUIFunc()
 	local script = Instance.new('LocalScript', MainFrame)
 
 	local gui = script.Parent
-	
+
 	local hotkey = "p"
 	local mouse = game.Players.LocalPlayer:GetMouse()
-	
+
 	mouse.KeyDown:Connect(function(key)
 		if key == hotkey then
 			if gui.Visible then
@@ -367,30 +395,31 @@ local function JQJD_fake_script() -- MainFrame.ToggleGUI
 		end
 	end)
 end
-coroutine.wrap(JQJD_fake_script)()
-local function QIXAKSY_fake_script() -- MainFrame.DragScript 
+coroutine.wrap(toggleUIFunc)()
+
+local function dragScript()
 	local script = Instance.new('LocalScript', MainFrame)
 
 	local UserInputService = game:GetService("UserInputService")
-	
+
 	local gui = script.Parent
-	
+
 	local dragging
 	local dragInput
 	local dragStart
 	local startPos
-	
+
 	local function update(input)
 		local delta = input.Position - dragStart
 		gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 	end
-	
+
 	gui.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 and gui.visible or input.UserInputType == Enum.UserInputType.Touch and gui.visible then
 			dragging = true
 			dragStart = input.Position
 			startPos = gui.Position
-	
+
 			input.Changed:Connect(function()
 				if input.UserInputState == Enum.UserInputState.End then
 					dragging = false
@@ -398,33 +427,34 @@ local function QIXAKSY_fake_script() -- MainFrame.DragScript
 			end)
 		end
 	end)
-	
+
 	gui.InputChanged:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch and gui.visible then
 			dragInput = input
 		end
 	end)
-	
+
 	UserInputService.InputChanged:Connect(function(input)
 		if input == dragInput and dragging and gui.visible then
 			update(input)
 		end
 	end)
 end
-coroutine.wrap(QIXAKSY_fake_script)()
-local function GTST_fake_script() -- MainFrame.ColorRainbow 
+coroutine.wrap(dragScript)()
+
+local function rainbowColor()
 	local script = Instance.new('LocalScript', MainFrame)
 
 	-- Imports
 	local button = script.Parent.ToggleRainbow
-	
+
 	-- Color loop
 	local toggle = false
 	local t = 10
 	local tick = tick
 	local fromHSV = Color3.fromHSV
 	local RunService = game:GetService("RunService")
-	
+
 	-- Functions
 	button.MouseButton1Down:Connect(function()
 		if toggle == false then
@@ -437,24 +467,84 @@ local function GTST_fake_script() -- MainFrame.ColorRainbow
 			stopRainbow()
 		end
 	end)
-	
+
 	function startRainbow()
 		RunService:BindToRenderStep("Rainbow", 1000, function()
 			local hue = tick() % t / t
 			local color = fromHSV(hue, 1, 1)
-			
+
 			local RBrick = math.floor(color.R * 255)
 			local GBrick = math.floor(color.G * 255)
 			local BBrick = math.floor(color.B * 255)
-			
+
 			local colorTable1 = { [1] = "Server", [2] = "UpdateTagColor" }
 			local colorTable2 = { [1] = { ["R"] = RBrick, ["G"] = GBrick, ["B"] = BBrick } }
 			game:GetService("ReplicatedStorage").RF:InvokeServer(colorTable1, colorTable2)
 		end)
 	end
-	
+
 	function stopRainbow()
 		RunService:UnbindFromRenderStep("Rainbow")
 	end
 end
-coroutine.wrap(GTST_fake_script)()
+coroutine.wrap(rainbowColor)()
+
+local function autoSoloMatch()
+	local script = Instance.new('LocalScript', MainFrame)
+
+	-- Imports
+	local button = script.Parent.SoloMatchToggle
+	
+	-- local variables
+	local soloMatchToggle = false
+	local t = 10
+	local tick = tick
+	local fromHSV = Color3.fromHSV
+	local RunService = game:GetService("RunService")
+
+	-- Functions
+	button.MouseButton1Down:Connect(function()
+		if soloMatchToggle == false then
+			soloMatchToggle = true
+			button.Text = "ON"
+		else
+			soloMatchToggle = false
+			button.Text = "OFF"
+		end
+	end)
+	
+	-- the important crap
+	local Players = game:GetService("Players")
+	local nearestDistance = 10
+	for i, player in pairs(Players:GetPlayers()) do
+		if player.Character == Players.LocalPlayer.Character then
+			-- print("-----------------")
+			for _, item in ipairs(workspace:GetDescendants()) do
+				if (item.ClassName == "ProximityPrompt") then
+					if (item.Parent.Parent.Parent.Parent.Name == "Props") then
+						return
+					end
+					
+					local itemPositionRelative = player:DistanceFromCharacter(item.Parent.Parent.Position)
+					if (itemPositionRelative < nearestDistance) then
+						if (item ~= nil) then 
+							nearestDistance = itemPositionRelative
+							-- print("Got nearest item " .. item.Name .. " at distance from player " .. itemPositionRelative)
+						end
+					end
+					if (item ~= nil) then 
+						item.Triggered:Connect(function(player)
+							while soloMatchToggle == true do
+								wait(0.5)
+								local ohTable1 = { [1] = "Server", [2] = "PlaySolo" }
+								local ohTable2 = {}
+								game:GetService("ReplicatedStorage").RF:InvokeServer(ohTable1, ohTable2)
+							end
+						end)
+					end
+				end
+			end
+		end
+	end
+end
+coroutine.wrap(autoSoloMatch)()
