@@ -533,12 +533,13 @@ local function autoSoloMatch()
 						end
 					end
 					if (item ~= nil) then 
-						item.Triggered:Connect(function(player)
+						item.TriggerEnded:Connect(function(player)
 							while soloMatchToggle == true do
-								wait(0.5)
-								local ohTable1 = { [1] = "Server", [2] = "PlaySolo" }
-								local ohTable2 = {}
-								game:GetService("ReplicatedStorage").RF:InvokeServer(ohTable1, ohTable2)
+                                local ohTable1 = { [1] = "Server", [2] = "PlaySolo" }
+                                local ohTable2 = {}
+                                wait(0.5)
+                                game:GetService("ReplicatedStorage").RF:InvokeServer(ohTable1, ohTable2)
+                                wait(5)
 							end
 						end)
 					end
