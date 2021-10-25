@@ -2,6 +2,7 @@
 small project made by me and kad3n for the game Funky Friday on Roblox gonna update it later but for now its gonna be like this it works fine but ok
 
 you can do funny things with it such as bypassing the tag limit, swearing on roblox, etc.
+and also there's an auto solo match toggle, that will automatically trigger a solo match even in public funky friday lobbies
 
 you can use literally almost any lua executor to use this - even jjsploit works which is a fucking joke
 
