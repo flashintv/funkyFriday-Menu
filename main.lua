@@ -201,7 +201,7 @@ GUIName.LayoutOrder = 1
 GUIName.Size = UDim2.new(0, 300, 0, 35)
 GUIName.ZIndex = 2
 GUIName.Font = Enum.Font.SourceSans
-GUIName.Text = "Funky Friday GUI (by Grizzle and CryBit)"
+GUIName.Text = "Funky Friday GUI (by Grizzle)"
 GUIName.TextColor3 = Color3.fromRGB(0, 0, 0)
 GUIName.TextSize = 20.000
 
