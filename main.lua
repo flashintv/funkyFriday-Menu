@@ -518,12 +518,11 @@ local function autoSoloMatch()
 	local nearestDistance = 10
 	for i, player in pairs(Players:GetPlayers()) do
 		if player.Character == Players.LocalPlayer.Character then
-			-- print("-----------------")
-			for _, item in ipairs(workspace:GetDescendants()) do
+			for _, item in ipairs(workspace.Map.Stages:GetDescendants()) do
 				if (item.ClassName == "ProximityPrompt") then
-					if (item.Parent.Parent.Parent.Parent.Name == "Props") then
-						return
-					end
+					--if (item.Parent.Parent.Parent.Parent.Name == "Props") then
+					--	return
+					--end
 					
 					local itemPositionRelative = player:DistanceFromCharacter(item.Parent.Parent.Position)
 					if (itemPositionRelative < nearestDistance) then
@@ -533,15 +532,15 @@ local function autoSoloMatch()
 						end
 					end
 					if (item ~= nil) then 
-						item.TriggerEnded:Connect(function(player)
-							if soloMatchToggle == true then
-                                local ohTable1 = { [1] = "Server", [2] = "PlaySolo" }
-                                local ohTable2 = {}
-                                wait(0.5)
-                                game:GetService("ReplicatedStorage").RF:InvokeServer(ohTable1, ohTable2)
-                                wait(5)
-                                
-							end
+						item.TriggerEnded:Connect(function(didPlayer)
+                            if didPlayer == player then
+                                if soloMatchToggle == true then
+                                    local ohTable1 = { [1] = "Server", [2] = "PlaySolo" }
+                                    local ohTable2 = {}
+                                    wait(0.5)
+                                    game:GetService("ReplicatedStorage").RF:InvokeServer(ohTable1, ohTable2)
+                                end
+                            end
 						end)
 					end
 				end
