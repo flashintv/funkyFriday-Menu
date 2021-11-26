@@ -20,6 +20,7 @@ local SoloMatchToggle = Instance.new("TextButton")
 local SoloMatchLabel = Instance.new("TextLabel")
 
 ScreenGui.Parent = game.CoreGui
+ScreenGui.ResetOnSpawn = false
 
 MainFrame.Name = "MainFrame"
 MainFrame.Parent = ScreenGui
