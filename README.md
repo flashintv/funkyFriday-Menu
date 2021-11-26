@@ -4,7 +4,7 @@ small project made by me, crybit and kad3n (they didnt do anything really) for t
 you can do funny things with it such as bypassing the tag limit, swearing on roblox, etc.
 and also there's an auto solo match toggle, that will automatically trigger a solo match even in public funky friday lobbies
 
-you can use literally almost any lua executor to use this - even jjsploit works which is a fucking joke
+you can use literally almost any lua executor to use this - but some features won't work like Auto-Solo Match or Rainbow Tag
 
 # COMMAND
 ```lua
