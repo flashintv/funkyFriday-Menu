@@ -19,7 +19,7 @@ local RainbowLabel = Instance.new("TextLabel")
 local SoloMatchToggle = Instance.new("TextButton")
 local SoloMatchLabel = Instance.new("TextLabel")
 
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.Parent = game.CoreGui
 
 MainFrame.Name = "MainFrame"
 MainFrame.Parent = ScreenGui
