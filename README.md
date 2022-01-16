@@ -1,9 +1,15 @@
 # Information about the menu
 Small project made by me (Grizzle) for the game Funky Friday on Roblox 
 
+# Features
+- Tag Changer
+- Color Changer
+- Auto Solo Match 
+- Rainbow Tag
 You can do funny things with it such as bypassing the tag limit, 
 and also there's an auto solo match toggle, that will automatically trigger a solo match even in public Funky Friday lobbies. 
 
+# Additional information
 You can use literally almost any lua executor to use this, but some features may not work like Auto-Solo Match or Rainbow Tag. 
 
 # Command
