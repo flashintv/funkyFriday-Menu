@@ -1,10 +1,10 @@
 # Funky Friday GUI
-small project made by me, crybit and kad3n (they didnt do anything really) for the game Funky Friday on Roblox gonna update it later but for now its gonna be like this it works fine but ok
+small project made by mefor the game Funky Friday on Roblox gonna update it later but for now its gonna be like this it works fine but ok
 
-you can do funny things with it such as bypassing the tag limit, swearing on roblox, etc.
+you can do funny things with it such as bypassing the tag limit
 and also there's an auto solo match toggle, that will automatically trigger a solo match even in public funky friday lobbies
 
-you can use literally almost any lua executor to use this - but some features won't work like Auto-Solo Match or Rainbow Tag
+you can use literally almost any lua executor to use this - but some features may not work like Auto-Solo Match or Rainbow Tag
 
 # COMMAND
 ```lua
